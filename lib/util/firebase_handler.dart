@@ -73,6 +73,10 @@ class FirebaseHandler{
     }
 
   }
+  
+  Stream<QuerySnapshot>? postFrom(String uid){
+    return fire_user.doc(uid).collection("post").snapshots();
+  }
 
 
 

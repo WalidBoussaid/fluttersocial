@@ -91,16 +91,14 @@ class MainState extends State<MainController>{
   }
 
   Widget? showPage(){
+
     switch(index){
-      case 0: HomePage(member: member);
- break;
-      case 1: MembersPage(member: member);
- break;
-      case 2: NotifPage(member: member);
- break;
-      case 3: ProfilePage(member: member);
+      case 0: return HomePage(member: member);
+      case 1: return MembersPage(member: member);
+      case 2: return NotifPage(member: member);
+      case 3: return ProfilePage(member: member);
     }
-    return null;
+
 
   }
 

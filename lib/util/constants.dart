@@ -14,6 +14,7 @@ late String likeKey = "likes";
 late String commentKey = "comments";
 late String dateKey = "date";
 late String textKey = "text";
+late String postIdKey = "postId";
 
 late String memberRef = "member";
 
