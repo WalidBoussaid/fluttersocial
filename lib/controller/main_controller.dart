@@ -1,0 +1,107 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:fluttersocial/controller/loading_controller.dart';
+import 'package:fluttersocial/custom_widget/bar_item.dart';
+import 'package:fluttersocial/model/member.dart';
+import 'package:fluttersocial/page/home_page.dart';
+import 'package:fluttersocial/page/notif_page.dart';
+import 'package:fluttersocial/page/profile_page.dart';
+import 'package:fluttersocial/page/write_post.dart';
+import 'package:fluttersocial/util/constants.dart';
+import 'package:fluttersocial/util/firebase_handler.dart';
+
+import '../model/color_theme.dart';
+import '../page/members_page.dart';
+
+class MainController extends StatefulWidget{
+
+
+  late String memberUid;
+  MainController({required this.memberUid});
+
+
+
+  @override
+  State<StatefulWidget> createState() => MainState();
+}
+
+class MainState extends State<MainController>{
+
+  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
+  late StreamSubscription streamSubscription;
+  late Member member;
+  late int index = 0;
+
+  @override
+  void initState() {
+
+    super.initState();
+    //Recupere User à partir de uid
+    streamSubscription = FirebaseHandler().fire_user.doc(widget.memberUid).snapshots().listen((event) {
+      setState(() {
+        member = Member(event);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    streamSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return (member == null) ? LoadingController() :Scaffold(
+      key: _globalKey,
+      appBar: AppBar(title: Text("Salut"),),
+      body: showPage(),
+      bottomNavigationBar: BottomAppBar(
+        color: ColorTheme().accent(),
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            BarItem(icon: homeIcon, onPressed: (() => buttonSelected(0)), selected: (index == 0)),
+            BarItem(icon: friendsIcon, onPressed: (() => buttonSelected(1)), selected: (index == 1)),
+            Container(width: 0, height: 0,),
+            BarItem(icon: notifIcon, onPressed: (() => buttonSelected(2)), selected: (index == 2)),
+            BarItem(icon: profileIcon, onPressed: (() => buttonSelected(3)), selected: (index == 3))
+
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _globalKey.currentState!.showBottomSheet((context) => WritePost(memberId: widget.memberUid,));
+        },
+        child: writePost,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  buttonSelected(int index){
+    setState(() {
+      this.index = index;
+    });
+  }
+
+  Widget? showPage(){
+    switch(index){
+      case 0: HomePage(member: member);
+ break;
+      case 1: MembersPage(member: member);
+ break;
+      case 2: NotifPage(member: member);
+ break;
+      case 3: ProfilePage(member: member);
+    }
+    return null;
+
+  }
+
+}
