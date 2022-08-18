@@ -54,9 +54,8 @@ class MainState extends State<MainController>{
 
   @override
   Widget build(BuildContext context) {
-    return (member == null) ? LoadingController() :Scaffold(
+    return (member == null) ? LoadingController() : Scaffold(
       key: _globalKey,
-      appBar: AppBar(title: Text("Salut"),),
       body: showPage(),
       bottomNavigationBar: BottomAppBar(
         color: ColorTheme().accent(),

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersocial/controller/auth_controller.dart';
 import 'package:fluttersocial/controller/main_controller.dart';
+import 'package:fluttersocial/model/color_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,18 +18,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+          primarySwatch: Colors.teal,
+          scaffoldBackgroundColor: ColorTheme().base(),
+          textTheme: TextTheme(bodyText2: TextStyle(color: ColorTheme().textColor())),
+          iconTheme: IconThemeData(color: ColorTheme().textColor())
       ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.userChanges(),
-        builder: (BuildContext context, snapshot){
-
+        builder: (BuildContext context, snapshot) {
           return (snapshot.hasData) ? MainController(memberUid: snapshot.data!.uid) : AuthController();
-
         },
       ),
     );
   }
 }
-
-

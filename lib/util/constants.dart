@@ -26,3 +26,6 @@ Icon writePost = Icon(Icons.border_color);
 Icon friendsIcon = Icon(Icons.group);
 Icon cameraIcon = Icon(Icons.camera_alt_rounded);
 Icon libraryIcon = Icon(Icons.photo_library_outlined);
+Icon likeIcon = Icon(Icons.favorite);
+Icon unlikeIcon = Icon(Icons.favorite_border);
+Icon commentIcon = Icon(Icons.message_rounded);

@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:fluttersocial/model/color_theme.dart';
 import 'package:fluttersocial/util/images.dart';
 
-class ProfileImage extends InkWell{
+class ProfileImage extends InkWell {
 
   ProfileImage({
-    required String urlString,
+    required String? urlString,
     required VoidCallback onPressed,
     double imageSize: 20
-  }): super (
+  }): super(
       onTap: onPressed,
-    child: CircleAvatar(
-      backgroundColor: ColorTheme().base(),
-      radius: imageSize,
-      backgroundImage: (urlString != null && urlString != "") ? CachedNetworkImageProvider(urlString) : AssetImage(logoImage) as ImageProvider
-    )
+      child: (urlString != null && urlString != "")
+          ? CircleAvatar(
+          backgroundColor: ColorTheme().base(),
+          radius: imageSize,
+          backgroundImage:  CachedNetworkImageProvider(urlString))
+          : CircleAvatar(
+          backgroundColor: ColorTheme().base(),
+          radius: imageSize,
+          backgroundImage: AssetImage(logoImage)
+      )
   );
-
 }

@@ -2,20 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttersocial/util/constants.dart';
 
 class Member {
-  String? uid;
-  String? name;
-  String? surname;
-  String? imageUrl;
-  List<dynamic>? followers;
-  List<dynamic>? following;
-  DocumentReference<Map<String, dynamic>>? ref;
-  String? documentId;
-  String? description;
+  late String uid;
+  late String name;
+  late String surname;
+  late String? imageUrl;
+  late List<dynamic> followers;
+  late List<dynamic> following;
+  late DocumentReference<Map<String, dynamic>> ref;
+  late String documentId;
+  late String? description;
 
   Member(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     ref = snapshot.reference;
     uid = snapshot.id;
     Map<String, dynamic>? datas = snapshot.data();
+    print("salut $datas");
     name = datas?[nameKey];
     surname = datas?[surnameKey];
     imageUrl = datas?[imageUrlKey];
@@ -37,10 +38,3 @@ class Member {
   }
 
 }
-
-
-
-
-
-
-
